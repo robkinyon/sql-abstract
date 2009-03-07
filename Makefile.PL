@@ -7,6 +7,7 @@ name 'SQL-Abstract';
 requires 'Moose' => '0.71';
 requires 'MooseX::Method::Signatures' => '0.10';
 requires 'MooseX::Declare' => '0.09';
+requires 'MooseX::AttributeHelpers' => '0.14';
 
 test_requires 'Test::More';
 test_requires 'Test::Differences';

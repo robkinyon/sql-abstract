@@ -1,7 +1,7 @@
-/inc/
+inc
 Makefile
 META.yml
 .*.sw[op]
-blib/
+blib
 pm_to_blib
 Makefile.old
