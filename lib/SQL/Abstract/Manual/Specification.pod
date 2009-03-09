@@ -1,0 +1,121 @@
+=head1 NAME
+
+SQL::Abstract::Manual::Specification
+
+=head1 SYNOPSIS
+
+This discusses the specification for the AST provided by L<SQL::Abstract>. It is meant
+to describe how the AST is structured, various components provided by L<SQL::Abstract>
+for use with this AST, how to manipulate the AST, and various uses for the AST once it
+is generated.
+
+=head1 MOTIVATIONS
+
+L<SQL::Abstract> has been in use for many years. Originally created to handle the
+where-clause formation found in L<DBIx::Abstract>, it was generalized to manage the
+creation of any SQL statement through the use of Perl structures. Through the beating
+it received as the SQL generation syntax for L<DBIx::Class>, various deficiencies
+were found and a generalized SQL AST was designed. This document describes that AST.
+
+=head1 GOALS
+
+The goals for this AST are as follows:
+
+=head2 SQL-specific semantics
+
+Instead of attempting to be an AST to handle any form of query, this will instead be
+specialized to manage SQL queries (and queries that map to SQL queries). This means
+that there will be support for SQL-specific features, such as placeholders.
+
+=head2 Perl-specific semantics
+
+This AST is meant to be used from within Perl ony. So, it will take advantage of as
+many Perl-specific features that make sense to use. No attempt whatosever will be made
+to make this AST work within any other language, including Perl6.
+
+=head2 Whole-lifecycle management
+
+Whether a query is built out of whole cloth in one shot or cobbled together from
+several snippets over the lifetime of a process, this AST will support any way to
+construct the query. Queries can also be built from other queries, so an UPDATE
+statement could be used as the basis for a SELECT statement, DELETE statement, or even
+a DDL statement of some kind.
+
+=head2 Dialect-agnostic usage
+
+Even though SQL itself has several ANSI specifications (SQL-92 and SQL-99 among them),
+this only serves as a basis for what a given RDBMS will expect. However, every engine
+has its own specific extensions and specific ways of handling common features. The API
+to the AST will provide ways of expressing common functionality in a common language.
+The emitters (objects that follow the Visitor pattern) will be responsible for
+converting that common language into RDBMS-specific SQL.
+
+=head1 AST STRUCTURE
+
+The AST will be a HoA (hash of arrays). The keys to the hash will be the various
+clauses of a SQL statement, plus some metadata keys. All metadata keys will be
+identifiable as such by being prefixed with an underscore. All keys will be in
+lowercase.
+
+=head2 SQL clause names
+
+The expected names for the various SQL clauses are:
+
+=over 4
+
+=item * select
+
+=item * tables
+
+=item * where
+
+=item * set
+
+=item * values
+
+=item * orderby
+
+=item * groupby
+
+=item * rows
+
+=item * for
+
+=item *
+
+=back
+
+=head2 Metadata keys
+
+These are the additional metadata keys that the AST provides for.
+
+=over 4
+
+=item * _query
+
+=item *
+
+=back
+
+=head2 Structural units
+
+Structural units in the AST are supported by loaded components. L<SQL::Abstract>
+provides for the following structural units by default:
+
+=over 4
+
+=item * Identifier
+
+=item *
+
+=back
+
+=head1 AUTHORS
+
+robkinyon: Rob Kinyon <rkinyon@cpan.org>
+
+=head1 LICENSE
+
+You may distribute this code under the same terms as Perl itself.
+
+=cut
